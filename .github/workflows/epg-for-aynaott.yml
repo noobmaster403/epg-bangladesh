@@ -187,4 +187,3 @@ except Exception as ex:
         git push https://github.com/${{ github.repository }}.git
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
-
