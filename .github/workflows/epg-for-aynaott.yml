@@ -19,21 +19,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v3
+      - name: Checkout the repository
+        uses: actions/checkout@v3
 
-    - name: Set up Python environment
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
+      - name: Set up Python environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
-    - name: Install dependencies
-      run: |
-        pip install requests pytz
+      - name: Install dependencies
+        run: |
+          pip install requests pytz
 
-    - name: Create epg.xml file
-      run: |
-        echo '''
+      - name: Create epg.xml file
+        run: |
+          echo '''
 import requests
 import json
 from xml.etree.ElementTree import Element, SubElement, tostring
@@ -173,17 +173,17 @@ try:
 
 except Exception as ex:
     print(f"An error occurred: {ex}")
-        ''' > generate_epg.py
+          ''' > generate_epg.py
 
-        # Run the Python script to generate epg.xml
-        python generate_epg.py
+          # Run the Python script to generate epg.xml
+          python generate_epg.py
 
-    - name: Commit and push epg.xml to the repository
-      run: |
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
-        git add epg.xml
-        git commit -m "Update epg.xml"
-        git push https://github.com/${{ github.repository }}.git
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Commit and push epg.xml to the repository
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add epg.xml
+          git commit -m "Update epg.xml"
+          git push https://github.com/${{ github.repository }}.git
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
