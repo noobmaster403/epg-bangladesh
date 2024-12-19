@@ -2,26 +2,31 @@ name: Generate EPG
 on:
  schedule:
    - cron: '0 */6 * * *'  # Runs every 6 hours
- workflow_dispatch:  # Allows manual trigger
+ workflow_dispatch:        # Allows manual trigger
 jobs:
  generate-epg:
    runs-on: ubuntu-latest
-    steps:
-   - uses: actions/checkout@v2
-    - name: Set up Python
-     uses: actions/setup-python@v2
-     with:
-       python-version: '3.x'
-    - name: Install dependencies
-     run: |
-       python -m pip install --upgrade pip
-       pip install requests pytz
-    - name: Generate EPG
-     run: python main.py
-    - name: Deploy to GitHub Pages
-     uses: peaceiris/actions-gh-pages@v3
-     with:
-       github_token: ${{ secrets.GITHUB_TOKEN }}
-       publish_dir: .
-       publish_branch: epg
-       keep_files: true
+   
+   steps:
+     - uses: actions/checkout@v2
+     
+     - name: Set up Python
+       uses: actions/setup-python@v2
+       with:
+         python-version: '3.x'
+     
+     - name: Install dependencies
+       run: |
+         python -m pip install --upgrade pip
+         pip install requests pytz
+     
+     - name: Generate EPG
+       run: python main.py
+     
+     - name: Deploy to GitHub Pages
+       uses: peaceiris/actions-gh-pages@v3
+       with:
+         github_token: ${{ secrets.GITHUB_TOKEN }}
+         publish_dir: .
+         publish_branch: epg
+         keep_files: true
