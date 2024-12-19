@@ -29,7 +29,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install requests pytz
+          python -m pip install --upgrade pip
+          pip install requests pytz  # Ensure requests is installed
 
       - name: Create epg.xml file
         run: |
@@ -109,7 +110,6 @@ try:
                 channel_id = channel.get("i", "unknown_id")
                 channel_name = channel.get("n", "unknown_name")
                 
-                # Check if a specific channel is requested for generation
                 if generate_for != 'all' and generate_for != channel_id:
                     continue
                 
@@ -175,7 +175,6 @@ except Exception as ex:
     print(f"An error occurred: {ex}")
           ''' > generate_epg.py
 
-          # Run the Python script to generate epg.xml
           python generate_epg.py
 
       - name: Commit and push epg.xml to the repository
